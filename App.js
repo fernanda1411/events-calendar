@@ -16,69 +16,80 @@ export default class App extends React.Component {
     this.state = {
       events: [
         {
+          id: 1,
           start: '2019-01-01 00:00:00',
           end: '2019-01-01 02:00:00',
           title: 'New Year Party',
           summary: 'xyz Location',
-        },{
-          start: '2019-01-01 01:00:00',
-          end: '2019-01-01 02:00:00',
-          title: 'New Year Wishes',
-          summary: 'Call to every one',
-        },
-        {
-          start: '2019-01-02 00:30:00',
-          end: '2019-01-02 01:30:00',
-          title: 'Parag Birthday Party',
-          summary: 'Call him',
-        },
-        {
-          start: '2019-01-03 01:30:00',
-          end: '2019-01-03 02:20:00',
-          title: 'My Birthday Party',
-          summary: 'Lets Enjoy',
-        },
-        {
-          start: '2019-02-04 04:10:00',
-          end: '2019-02-04 04:40:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
+        }
+        // ,{
+        //   id: 2,
+        //   start: '2019-01-01 01:00:00',
+        //   end: '2019-01-01 02:00:00',
+        //   title: 'New Year Wishes',
+        //   summary: 'Call to every one',
+        // },
+        // {
+        //   id: 3,
+        //   start: '2019-01-02 00:30:00',
+        //   end: '2019-01-02 01:30:00',
+        //   title: 'Parag Birthday Party',
+        //   summary: 'Call him',
+        // },
+        // {
+        //   id: 4,
+        //   start: '2019-01-03 01:30:00',
+        //   end: '2019-01-03 02:20:00',
+        //   title: 'My Birthday Party',
+        //   summary: 'Lets Enjoy',
+        // },
+        // {
+        //   id: 5,
+        //   start: '2019-02-04 04:10:00',
+        //   end: '2019-02-04 04:40:00',
+        //   title: 'Engg Expo 2019',
+        //   summary: 'Expoo Vanue not confirm',
+        // },
       ],
     };
   }
 
-  eventClicked(event) {
-    //On Click oC a event showing alert from here
-    alert(JSON.stringify(event));
+  removeEvent(event) {
+    this.setState(state => {
+      const currentEvents = this.state.events;
+      const updatedEvents = currentEvents.filter(evt => evt.id !== event.id);
+      return {events: updatedEvents};
+    })
   }
 
   addEvent(event) {
-    //On Click oC a event showing alert from here
-    alert("oi");
-
-    this.setState((state) => ({
-      events: [...state.events, {
+    this.setState(state => {
+      // todo: make id auto increment
+      const newEvent = {
+        id: 6,
         start: '2019-01-01 04:10:00',
         end: '2019-01-01 04:40:00',
         title: 'Engg Expo 2019 bla',
         summary: 'Expoo Vanue not confirm',
-      }]
-    }))
+      }
+      return {events: [...state.events, newEvent]}
+    })
   }
+
   
 
   render() {
+    console.log("events: ", this.state.events)
     return (      
-      <View style={{ flex: 1, marginTop: 20 }}>
+      <View style={{ flex: 1, marginTop: 40}}>
         <Button
-          style={{ marginTop: 20 }}
+          style={{ marginTop: 20, backgroundColor: "#CCC" }}
           onPress={this.addEvent.bind(this)}
           title="Add Event"
           color="#841584"
         />
         <EventCalendar
-          eventTapped={this.eventClicked.bind(this)}
+          eventTapped={this.removeEvent.bind(this)}
           //Function on event press
           events={this.state.events}
           //passing the Array of event
